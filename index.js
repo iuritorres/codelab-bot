@@ -1,27 +1,42 @@
-import { Client, Collection, GatewayIntentBits } from "discord.js";
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
 
 // utility
-import * as pingCommand from "./commands/utility/ping.js";
-import * as serverCommand from "./commands/utility/server.js";
-import * as userCommand from "./commands/utility/user.js";
+import * as pingCommand from './commands/utility/ping.js';
+import * as serverCommand from './commands/utility/server.js';
+import * as userCommand from './commands/utility/user.js';
+
+// support
+import * as ticketCommand from './commands/support/ticket.js';
 
 // message
-import * as announceCommand from "./commands/message/announce.js";
+import * as announceCommand from './commands/message/announce.js';
 
 // events
-import * as interactionCreateEvent from "./events/interactionCreate.js";
-import * as readyEvent from "./events/ready.js";
+import * as interactionCreateEvent from './events/interactionCreate.js';
+import * as readyEvent from './events/ready.js';
 
 const token = process.env.DISCORD_TOKEN;
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
+  ],
+});
 client.commands = new Collection();
 
 // Set up commands
-const commands = [pingCommand, serverCommand, userCommand, announceCommand];
+const commands = [
+  pingCommand,
+  serverCommand,
+  userCommand,
+  announceCommand,
+  ticketCommand,
+];
 
 commands.forEach((command) => {
-  if ("data" in command && "execute" in command) {
+  if ('data' in command && 'execute' in command) {
     client.commands.set(command.data.name, command);
   } else {
     console.log(

@@ -1,22 +1,31 @@
-import { REST, Routes } from "discord.js";
+import { REST, Routes } from 'discord.js';
 
 // utility
-import * as pingCommand from "./commands/utility/ping.js";
-import * as serverCommand from "./commands/utility/server.js";
-import * as userCommand from "./commands/utility/user.js";
+import * as pingCommand from './commands/utility/ping.js';
+import * as serverCommand from './commands/utility/server.js';
+import * as userCommand from './commands/utility/user.js';
+
+// support
+import * as ticketCommand from './commands/support/ticket.js';
 
 // message
-import * as announceCommand from "./commands/message/announce.js";
+import * as announceCommand from './commands/message/announce.js';
 
 const token = process.env.DISCORD_TOKEN;
 const clientId = process.env.DISCORD_CLIENT_ID;
 
-const commandsList = [pingCommand, serverCommand, userCommand, announceCommand];
+const commandsList = [
+  pingCommand,
+  serverCommand,
+  userCommand,
+  announceCommand,
+  ticketCommand,
+];
 const validatedCommands = [];
 
 // Validate commands from commandsList
 commandsList.forEach((command) => {
-  if ("data" in command && "execute" in command) {
+  if ('data' in command && 'execute' in command) {
     validatedCommands.push(command.data);
   } else {
     console.log(
