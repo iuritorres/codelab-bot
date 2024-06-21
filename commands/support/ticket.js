@@ -69,6 +69,7 @@ async function execute(interaction) {
     .setPlaceholder('Digite o motivo do ticket aqui...')
     .setStyle(TextInputStyle.Short)
     .setMinLength(10)
+    .setMaxLength(100)
     .setRequired(true);
 
   const descriptionInput = new TextInputBuilder()
@@ -77,6 +78,7 @@ async function execute(interaction) {
     .setPlaceholder('Descreva o problema ou dúvida que você tem...')
     .setStyle(TextInputStyle.Paragraph)
     .setMinLength(10)
+    .setMaxLength(1000)
     .setRequired(true);
 
   const actionRow1 = new ActionRowBuilder().addComponents(reportReasonInput);
