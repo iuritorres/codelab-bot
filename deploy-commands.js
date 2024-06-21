@@ -9,7 +9,7 @@ import * as userCommand from "./commands/utility/user.js";
 import * as announceCommand from "./commands/message/announce.js";
 
 const token = process.env.DISCORD_TOKEN;
-const clientId = process.env.CLIENT_ID;
+const clientId = process.env.DISCORD_CLIENT_ID;
 
 const commandsList = [pingCommand, serverCommand, userCommand, announceCommand];
 const validatedCommands = [];
