@@ -108,8 +108,8 @@ async function handleModalSubmit(interaction) {
           .concat(
             codeBlock(
               'fix',
-              'Aguarde um membro da equipe responder!  🕐 \n'.concat(
-                'Responderemos o mais rápido possível!  🚀'
+              'Aguarde um membro da equipe responder! 🕐 \n'.concat(
+                'Responderemos o mais rápido possível! 🚀'
               )
             ),
             'ㅤ'
