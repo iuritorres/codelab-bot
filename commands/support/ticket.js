@@ -1,5 +1,6 @@
 import {
   ActionRowBuilder,
+  Colors,
   ModalBuilder,
   SlashCommandBuilder,
   TextInputBuilder,
@@ -13,6 +14,51 @@ const data = new SlashCommandBuilder()
   );
 
 async function execute(interaction) {
+  // Verify if the user already has a ticket
+  const ticket = interaction.guild.channels.cache.find(
+    (channel) =>
+      channel.name === `ticket-${interaction.user.username.toLowerCase()}`
+  );
+
+  if (ticket) {
+    interaction.reply({
+      content: `Ei! você já tem um ticket aberto! 👉🏽 <#${ticket.id}>`,
+      ephemeral: true,
+    });
+
+    return;
+  }
+
+  // Verify if the guild has a role named "Support Team"
+  const supportRole = interaction.guild.roles.cache.find(
+    (role) => role.name === 'Support Team'
+  );
+
+  if (!supportRole) {
+    interaction.guild.roles
+      .create({
+        name: 'Support Team',
+        color: Colors.Blue,
+        reason: 'The BOT needs a role to manage the support tickets',
+      })
+      .catch(console.error);
+  }
+
+  // Verify if the guild has a category named "tickets"
+  const ticketCategory = interaction.guild.channels.cache.find(
+    (channel) => channel.name.toLowerCase() === 'tickets'
+  );
+
+  if (!ticketCategory) {
+    interaction.reply({
+      content:
+        'A categoria de tickets não foi encontrada! 😢, aguarde a administração do servidor criar uma.',
+      ephemeral: true,
+    });
+
+    return;
+  }
+
   const modal = new ModalBuilder()
     .setCustomId('ticketModal')
     .setTitle('Ticket de Suporte');

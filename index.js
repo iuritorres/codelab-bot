@@ -6,6 +6,7 @@ import * as serverCommand from './commands/utility/server.js';
 import * as userCommand from './commands/utility/user.js';
 
 // support
+import * as fecharticketCommand from './commands/support/fecharticket.js';
 import * as ticketCommand from './commands/support/ticket.js';
 
 // message
@@ -33,6 +34,7 @@ const commands = [
   userCommand,
   announceCommand,
   ticketCommand,
+  fecharticketCommand,
 ];
 
 commands.forEach((command) => {

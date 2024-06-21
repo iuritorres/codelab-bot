@@ -60,10 +60,7 @@ async function handleModalSubmit(interaction) {
   }
 
   if (interaction.customId === 'ticketModal') {
-    // verificar se existe uma categoria de tickets
-
-    // verificar se tem ticket aberto
-
+    // Create the ticket channel and send the ticket message
     const reportReason =
       interaction.fields.getTextInputValue('reportReasonInput');
     const description =
@@ -84,10 +81,16 @@ async function handleModalSubmit(interaction) {
       },
     ];
 
+    const ticketCategory = interaction.guild.channels.cache.find(
+      (channel) => channel.name.toLowerCase() === 'tickets'
+    );
+
     interaction.guild.channels
       .create({
         name: `ticket-${interaction.user.username}`,
+        topic: reportReason,
         type: ChannelType.GuildText,
+        parent: ticketCategory.id,
         permissionOverwrites,
       })
       .then(async (channel) => {
@@ -123,11 +126,4 @@ async function handleModalSubmit(interaction) {
   }
 }
 
-// Delete the channel
-// guild.channels
-//   .delete('858850993013260338', 'making room for new channels')
-//   .then(console.log)
-//   .catch(console.error);
-
 export { execute, name };
-
