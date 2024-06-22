@@ -81,8 +81,8 @@ async function handleModalSubmit(interaction) {
       },
     ];
 
-    const ticketCategory = interaction.guild.channels.cache.find(
-      (channel) => channel.name.toLowerCase() === 'tickets'
+    const ticketCategory = interaction.guild.channels.cache.find((channel) =>
+      channel.name.toLowerCase().includes('tickets')
     );
 
     interaction.guild.channels
@@ -103,13 +103,14 @@ async function handleModalSubmit(interaction) {
           .concat(`> ${reportReason}`)
           .concat('\n\n')
           .concat(`> ${bold('DESCRIÇÃO:')} \n`)
-          .concat(`> ${description}`)
+          // .concat(`> ${description}`)
+          .concat(`> ${description.split('\n').join('\n> ')}`)
           .concat('\n\n')
           .concat(
             codeBlock(
               'fix',
-              'Aguarde um membro da equipe responder! 🕐 \n'.concat(
-                'Responderemos o mais rápido possível! 🚀'
+              'Aguarde um membro da equipe responder!🕐 \n'.concat(
+                'Responderemos o mais rápido possível!🚀'
               )
             ),
             'ㅤ'

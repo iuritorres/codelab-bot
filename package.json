@@ -1,20 +1,25 @@
 {
-  "name": "zack-discord-bot",
+  "name": "codelab-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Discord bot for the CodeLab server.",
+  "keywords": [],
+  "author": {
+    "name": "Iuri Torres",
+    "email": "iuri.t1000@gmail.com",
+    "url": "https://github.com/iuritorres/"
+  },
+  "license": "ISC",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node --env-file=.env .",
     "deploy-commands": "node --env-file=.env deploy-commands.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "discord.js": "^14.14.1"
   },
   "devDependencies": {
-    "eslint": "^8.56.0"
+    "eslint": "^8.56.0",
+    "wrangler": "^3.61.0"
   }
 }

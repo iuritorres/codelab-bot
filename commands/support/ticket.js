@@ -45,8 +45,8 @@ async function execute(interaction) {
   }
 
   // Verify if the guild has a category named "tickets"
-  const ticketCategory = interaction.guild.channels.cache.find(
-    (channel) => channel.name.toLowerCase() === 'tickets'
+  const ticketCategory = interaction.guild.channels.cache.find((channel) =>
+    channel.name.toLowerCase().includes('tickets')
   );
 
   if (!ticketCategory) {
