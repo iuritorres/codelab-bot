@@ -103,7 +103,6 @@ async function handleModalSubmit(interaction) {
           .concat(`> ${reportReason}`)
           .concat('\n\n')
           .concat(`> ${bold('DESCRIÇÃO:')} \n`)
-          // .concat(`> ${description}`)
           .concat(`> ${description.split('\n').join('\n> ')}`)
           .concat('\n\n')
           .concat(
