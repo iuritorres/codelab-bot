@@ -1,16 +1,32 @@
 import {
+  ActionRowBuilder,
   ChannelType,
   Events,
   PermissionFlagsBits,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
   bold,
   codeBlock,
 } from 'discord.js';
 
+import {
+  buildBugModal,
+  buildFinanceModal,
+  buildOtherModal,
+  buildQuestionModal,
+  buildReportModal,
+  buildSuggestionModal,
+} from '../modals/tickets/index.js';
+
 const name = Events.InteractionCreate;
 
 async function execute(interaction) {
-  if (interaction.isChatInputCommand()) handleChatInputCommand(interaction);
-  if (interaction.isModalSubmit()) handleModalSubmit(interaction);
+  if (interaction.isChatInputCommand())
+    await handleChatInputCommand(interaction);
+  if (interaction.isModalSubmit()) await handleModalSubmit(interaction);
+  if (interaction.isStringSelectMenu())
+    await handleStringSelectMenu(interaction);
+  if (interaction.isButton()) await handleButton(interaction);
 }
 
 async function handleChatInputCommand(interaction) {
@@ -121,6 +137,104 @@ async function handleModalSubmit(interaction) {
           content: `O Ticket foi criado! 👉🏽 <#${channel.id}>`,
           ephemeral: true,
         });
+      })
+      .catch(console.error);
+  }
+}
+
+async function handleStringSelectMenu(interaction) {
+  if (interaction.customId !== 'ticket-select-menu') return;
+
+  switch (interaction.values[0]) {
+    case 'question':
+      const questionModal = buildQuestionModal();
+      await interaction.showModal(questionModal);
+
+      console.log(interaction);
+      break;
+
+    case 'report':
+      const reportModal = buildReportModal();
+      await interaction.showModal(reportModal);
+
+      break;
+
+    case 'suggestion':
+      const suggestionModal = buildSuggestionModal();
+      await interaction.showModal(suggestionModal);
+      break;
+
+    case 'finance':
+      const financeModal = buildFinanceModal();
+      await interaction.showModal(financeModal);
+      break;
+
+    case 'bug':
+      const bugModal = buildBugModal();
+      await interaction.showModal(bugModal);
+      break;
+
+    case 'other':
+      const otherModal = buildOtherModal();
+      await interaction.showModal(other);
+      break;
+
+    default:
+      break;
+  }
+}
+
+async function handleButton(interaction) {
+  // if (interaction.customId === 'closeTicket') {
+  //   await interaction.channel.delete();
+  // }
+
+  if (interaction.customId === 'openTicket') {
+    const options = [
+      new StringSelectMenuOptionBuilder()
+        .setLabel('Dúvidas')
+        .setDescription('Caso tenha alguma dúvida ou problema.')
+        .setEmoji('💬')
+        .setValue('question'),
+      new StringSelectMenuOptionBuilder()
+        .setLabel('Denúncias')
+        .setDescription('Caso queira denunciar um membro.')
+        .setEmoji('⛔')
+        .setValue('report'),
+      new StringSelectMenuOptionBuilder()
+        .setLabel('Sugestões')
+        .setDescription('Caso tenha alguma sugestão para o servidor.')
+        .setEmoji('💡')
+        .setValue('suggestion'),
+      new StringSelectMenuOptionBuilder()
+        .setLabel('Financeiro.')
+        .setDescription('Caso queira falar sobre financeiro.')
+        .setEmoji('💵')
+        .setValue('finance'),
+      new StringSelectMenuOptionBuilder()
+        .setLabel('Bug')
+        .setDescription('Caso queira reportar um bug.')
+        .setEmoji('🚧')
+        .setValue('bug'),
+      new StringSelectMenuOptionBuilder()
+        .setLabel('Outro')
+        .setDescription('Caso não se encaixe em nenhuma das opções acima.')
+        .setEmoji('🔄')
+        .setValue('other'),
+    ];
+
+    const select = new StringSelectMenuBuilder()
+      .setCustomId('ticket-select-menu')
+      .setPlaceholder('Clique para selecionar uma opção')
+      .addOptions(...options);
+
+    const menu = new ActionRowBuilder().addComponents(select);
+
+    await interaction
+      .reply({
+        content: bold(`Escolha um tópico:`),
+        ephemeral: true,
+        components: [menu],
       })
       .catch(console.error);
   }
