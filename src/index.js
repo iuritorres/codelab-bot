@@ -5,9 +5,10 @@ import * as pingCommand from './commands/utility/ping.js';
 import * as serverCommand from './commands/utility/server.js';
 import * as userCommand from './commands/utility/user.js';
 
-// support
-import * as fecharticketCommand from './commands/support/fecharticket.js';
-import * as ticketCommand from './commands/support/ticket.js';
+// tickets
+import * as fecharticketCommand from './commands/tickets/fecharticket.js';
+import * as setupticketsCommand from './commands/tickets/setuptickets.js';
+import * as ticketCommand from './commands/tickets/ticket.js';
 
 // message
 import * as announceCommand from './commands/message/announce.js';
@@ -35,6 +36,7 @@ const commands = [
   announceCommand,
   ticketCommand,
   fecharticketCommand,
+  setupticketsCommand,
 ];
 
 commands.forEach((command) => {

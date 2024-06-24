@@ -10,13 +10,15 @@
   },
   "license": "ISC",
   "type": "module",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node --env-file=.env .",
-    "deploy-commands": "node --env-file=.env deploy-commands.js"
+    "dev": "nodemon --env-file=.env .",
+    "deploy-commands": "node --env-file=.env src/deploy-commands.js"
   },
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.14.1",
+    "nodemon": "^3.1.4"
   },
   "devDependencies": {
     "eslint": "^8.56.0",

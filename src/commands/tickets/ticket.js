@@ -21,7 +21,7 @@ async function execute(interaction) {
   );
 
   if (ticket) {
-    interaction.reply({
+    await interaction.reply({
       content: `Ei! você já tem um ticket aberto! 👉🏽 <#${ticket.id}>`,
       ephemeral: true,
     });
@@ -50,7 +50,7 @@ async function execute(interaction) {
   );
 
   if (!ticketCategory) {
-    interaction.reply({
+    await interaction.reply({
       content:
         'A categoria de tickets não foi encontrada! 😢, aguarde a administração do servidor criar uma.',
       ephemeral: true,
