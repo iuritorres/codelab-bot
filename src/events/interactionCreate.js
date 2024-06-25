@@ -75,8 +75,9 @@ async function handleModalSubmit(interaction) {
     }
   }
 
-  if (interaction.customId === 'ticketModal') {
+  if (interaction.customId === 'ticketReportModal') {
     // Create the ticket channel and send the ticket message
+    const user = interaction.fields.getTextInputValue('userInput');
     const reportReason =
       interaction.fields.getTextInputValue('reportReasonInput');
     const description =
@@ -101,7 +102,7 @@ async function handleModalSubmit(interaction) {
       channel.name.toLowerCase().includes('tickets')
     );
 
-    interaction.guild.channels
+    await interaction.guild.channels
       .create({
         name: `ticket-${interaction.user.username}`,
         topic: reportReason,
@@ -114,6 +115,11 @@ async function handleModalSubmit(interaction) {
         const message = `${bold(`🪪  Ticket criado por <@${userId}>!`)}`
           .concat('\n')
           .concat(`${bold(`📆  Data:`)} ${new Date().toLocaleDateString()}`)
+          .concat('\n\n')
+          .concat(`${'⛔'} Denúncia`)
+          .concat('\n\n')
+          .concat(`> ${bold('USUÁRIO:')} \n`)
+          .concat(`> ${user}`)
           .concat('\n\n')
           .concat(`> ${bold('MOTIVO DE ABERTURA:')} \n`)
           .concat(`> ${reportReason}`)
@@ -131,9 +137,9 @@ async function handleModalSubmit(interaction) {
             'ㅤ'
           );
 
-        channel.send(message).catch(console.error);
+        await channel.send(message).catch(console.error);
 
-        interaction.reply({
+        await interaction.editReply({
           content: `O Ticket foi criado! 👉🏽 <#${channel.id}>`,
           ephemeral: true,
         });
@@ -150,7 +156,6 @@ async function handleStringSelectMenu(interaction) {
       const questionModal = buildQuestionModal();
       await interaction.showModal(questionModal);
 
-      console.log(interaction);
       break;
 
     case 'report':
